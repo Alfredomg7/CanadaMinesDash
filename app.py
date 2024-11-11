@@ -1,3 +1,4 @@
+import os
 from dash import Dash
 import dash_bootstrap_components as dbc
 import polars as pl
@@ -10,7 +11,6 @@ def create_app(dataframes: dict) -> Dash:
     all_data_df = dataframes['all_data_df']
     gantt_df = dataframes['gantt_df']
     app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-    server = app.server
     app.layout = create_layout(all_data_df)
     register_callbacks(app, all_data_df, gantt_df)
     return app
@@ -24,4 +24,5 @@ if __name__ == '__main__':
         'gantt_df': gantt_df,
     }
     app = create_app(dataframes)
-    app.run_server(host="0.0.0.0", port=8080)
+    port = int(os.environ.get("PORT", 8050))
+    app.run_server(host="0.0.0.0", port=port)
