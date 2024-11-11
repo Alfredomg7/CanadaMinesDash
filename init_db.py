@@ -86,12 +86,11 @@ def init_db():
     }
 
     os.makedirs('data', exist_ok=True)
-    if not os.path.exists(raw_filename):
+
+    if not os.path.exists(prepared_filename):
         print(f'Downloading data from {url}...')
         df = download_data(url, schema)
         print(f'Data downloaded!')
-
-    if not os.path.exists(prepared_filename):
         print(f'Preparing data from {raw_filename}...')
         df = prepare_data(df, prepared_filename)
         print(f'Data prepared and saved to {prepared_filename}')
